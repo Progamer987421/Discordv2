@@ -38,9 +38,12 @@ app.post('/bot/:id/kill', auth, (req, res) => res.json(manager.killBot(req.param
 app.post('/bot/:id/chat', auth, (req, res) => res.json(manager.sendChat(req.params.id, req.body.message)));
 app.get('/bot/:id/logs',  auth, (req, res) => res.json(manager.getLogs(req.params.id)));
 
-app.post('/bot/:id/cmd',  auth, (req, res) => {
+app.post('/bot/:id/cmd',  auth, async (req, res) => {
   if (!req.body.cmd) return res.status(400).json({ error: 'cmd required' });
-  res.json(manager.runCommand(req.params.id, req.body.cmd));
+  try {
+    const result = await manager.runCommand(req.params.id, req.body.cmd);
+    res.json(result);
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 app.get('/bot/:id/captcha', auth, (req, res) => res.json(manager.getCaptchaImage(req.params.id)));

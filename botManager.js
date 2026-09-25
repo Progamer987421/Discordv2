@@ -4,7 +4,7 @@ const { GoalBlock, GoalFollow, GoalLookAtBlock, GoalXZ, GoalNear } = goals;
 const { SocksClient } = require('socks');
 const ProxyManager = require('./proxyManager');
 
-const SERVER_HOST    = 'play.applemc.net';
+const SERVER_HOST    = 'play.applemc.fun';
 const SERVER_PORT    = 25565;
 const SERVER_VERSION = '1.20.1';
 const BOT_PASSWORD   = '231182';
@@ -295,7 +295,7 @@ class BotManager {
   }
 
   // ── Commands ──────────────────────────────────────────────────
-  runCommand(id, cmd) {
+  async runCommand(id, cmd) {
     if (!this.meta[id]) return { error: 'Bot not found' };
     const bot = this.bots[id];
     cmd = cmd.trim();
